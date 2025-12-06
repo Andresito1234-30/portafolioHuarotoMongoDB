@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -15,6 +16,14 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  useEffect(() => {
+    const expired = localStorage.getItem("sessionExpired");
+    if (expired) {
+      setError("⏳ Tu sesión ha expirado por seguridad. Por favor inicia sesión nuevamente.");
+      localStorage.removeItem("sessionExpired");
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -30,6 +39,7 @@ function Login() {
     }
   };
 
+  
   return (
     <section>
       <Container fluid className="auth-section" id="login">
@@ -105,7 +115,7 @@ function Login() {
                     </a>
                   </p>
                   <p>
-                    <a href="#" className="auth-link">
+                    <a href="/#" className="auth-link">
                       ¿Olvidaste tu contraseña?
                     </a>
                   </p>

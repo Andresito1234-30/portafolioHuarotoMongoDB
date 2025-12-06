@@ -4,7 +4,7 @@ const { JWT_SECRET_KEY } = require("../constante");
 
 function createAccessToken(user) {
   const expToken = new Date();
-  expToken.setMinutes(expToken.getMinutes() + 15); // 15 minutos
+  expToken.setMinutes(expToken.getMinutes() + 1); // 15 minutos
 
   const payload = {
     token_type: "access",

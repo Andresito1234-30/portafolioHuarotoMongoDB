@@ -43,7 +43,7 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
-  background: linear-gradient(to right, #58a6ff, #79c0ff);
+  background: linear-gradient(to right, #6b3fb8, #9968f0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -73,7 +73,7 @@
 .input-icon {
   position: absolute;
   left: 12px;
-  color: #58a6ff;
+  color: #2d1950;
   font-size: 16px;
   z-index: 1;
 }
@@ -91,7 +91,7 @@
 
 .auth-input:focus {
   background: rgba(13, 17, 23, 0.95);
-  border-color: #58a6ff;
+  border-color: #8955e4;
   box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
   color: #282c34 !important;
   outline: none;
@@ -121,8 +121,8 @@
 
 /* ==================== Button ==================== */
 .auth-btn {
-  background: linear-gradient(to right, #1f6feb, #388bfd);
-  border: 1px solid #58a6ff;
+  background: linear-gradient(to right, #2d1950, #452480);
+  border: 1px solid #8955e4; 
   color: white;
   font-weight: 600;
   padding: 10px 20px;
@@ -133,7 +133,7 @@
 }
 
 .auth-btn:hover:not(:disabled) {
-  background: linear-gradient(to right, #388bfd, #58a6ff);
+  background: linear-gradient(to right, #8955e4, #8955e4);
   box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
   transform: translateY(-2px);
 }
@@ -169,14 +169,14 @@
 }
 
 .auth-link {
-  color: #58a6ff;
+  color: #8955e4;
   text-decoration: none;
   transition: color 0.3s ease;
   font-weight: 500;
 }
 
 .auth-link:hover {
-  color: #79c0ff;
+  color: #8955e4;
   text-decoration: underline;
 }
 

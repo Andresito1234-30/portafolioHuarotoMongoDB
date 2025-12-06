@@ -3,13 +3,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import homeLogo from "../../Assets/home-main.svg";
 import Particle from "../Particle";
 import Home2 from "./Home2";
-import Type from "./Type";
-import Techstack from "../About/Techstack";
-import Github from "../About/Github";
+import Type from "./Type"; 
 import {
-  AiFillGithub,
-  AiOutlineTwitter,
-  AiFillInstagram,
+  AiFillGithub, 
 } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 

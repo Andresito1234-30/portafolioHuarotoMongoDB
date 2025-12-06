@@ -29,8 +29,10 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
 
+    /* COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
+    const originalRequest = error.config;
+    
     // Si el token expiró (401), intentar refrescar
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -56,6 +58,16 @@ api.interceptors.response.use(
         localStorage.removeItem("user");
         window.location.href = "/login";
       }
+    }*/
+
+    // Si el token expiró → expulsar al usuario
+    if (error.response?.status === 401) {
+      localStorage.setItem("sessionExpired", "true");
+
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
     }
 
     return Promise.reject(error);
@@ -70,7 +82,7 @@ export const authAPI = {
     api.post("/auth/refresh-access-token", { token: refreshToken }),
   logout: () => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    //localStorage.removeItem("refreshToken");  COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
     localStorage.removeItem("user");
   },
   getCurrentUser: () => {
@@ -78,7 +90,7 @@ export const authAPI = {
     return user ? JSON.parse(user) : null;
   },
   getAccessToken: () => localStorage.getItem("accessToken"),
-  getRefreshToken: () => localStorage.getItem("refreshToken"),
+  //getRefreshToken: () => localStorage.getItem("refreshToken"), COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
   isAuthenticated: () => !!localStorage.getItem("accessToken"),
 };
 

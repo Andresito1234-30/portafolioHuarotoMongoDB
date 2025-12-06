@@ -34,11 +34,18 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await authAPI.login({ email, password });
-      const { access, refresh, message } = response.data;
+      
+      // CREADO PARA CERRAR SESIÓN SÍ O SÍ
+      const { access } = response.data;
+
+      /*DESAHIBILITADO PARA CERRAR SESIÓN SÍ O SÍ
+      const { access, refresh, message } = response.data;*/
 
       // Guardar tokens en localStorage
       localStorage.setItem("accessToken", access);
-      localStorage.setItem("refreshToken", refresh);
+      
+      /* Guardar refresh token si existe (DESAHIBILITADO PARA CERRAR SESIÓN SÍ O SÍ)
+      localStorage.setItem("refreshToken", refresh);*/
 
       // Crear objeto usuario básico (el backend no retorna datos del usuario completos)
       const userData = {

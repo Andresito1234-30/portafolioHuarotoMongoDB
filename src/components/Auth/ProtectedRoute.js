@@ -1,20 +1,41 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
-/**
- * Componente que protege rutas requiriendo autenticación
- * @param {JSX.Element} element - Componente a renderizar
- * @returns {JSX.Element} - Componente protegido o redirección al login
- */
 function ProtectedRoute({ element }) {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  if (loading) {
-    return <div>Cargando...</div>;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
-  return isAuthenticated ? element : <Navigate to="/login" replace />;
+  // Obtener token
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  try {
+    const decoded = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+
+    // ✔ Si el token expiró → expulsar sesión
+    if (decoded.exp < currentTime) {
+      localStorage.setItem("sessionExpired", "true");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
+      return <Navigate to="/login" replace />;
+    }
+
+  } catch (err) {
+    // Si el token es inválido → logout
+    return <Navigate to="/login" replace />;
+  }
+
+  return element;
 }
 
 export default ProtectedRoute;
