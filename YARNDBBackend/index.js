@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const app = require("./App");
+const app = require("./app");
 const {
   DB_USER,
   DB_PASSWORD,
