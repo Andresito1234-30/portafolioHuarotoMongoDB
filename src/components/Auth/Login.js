@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import Particle from "../Particle";
 import "./Auth.css";
@@ -13,6 +12,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -31,7 +31,7 @@ function Login() {
 
     try {
       await login(email, password);
-      navigate("/");
+      navigate("/"); // ✔ funciona con basename
     } catch (err) {
       setError(err.response?.data?.msg || "Error al iniciar sesión. Intenta de nuevo.");
     } finally {
@@ -39,7 +39,6 @@ function Login() {
     }
   };
 
-  
   return (
     <section>
       <Container fluid className="auth-section" id="login">
@@ -95,7 +94,6 @@ function Login() {
                     </div>
                   </Form.Group>
 
-                  {/* Submit Button */}
                   <Button
                     variant="primary"
                     type="submit"
@@ -110,16 +108,17 @@ function Login() {
                 <div className="auth-links">
                   <p>
                     ¿No tienes cuenta?{" "}
-                    <a href="/signup" className="auth-link">
+                    <Link to="/signup" className="auth-link">
                       Regístrate aquí
-                    </a>
+                    </Link>
                   </p>
                   <p>
-                    <a href="/#" className="auth-link">
+                    <Link to="/forgot-password" className="auth-link">
                       ¿Olvidaste tu contraseña?
-                    </a>
+                    </Link>
                   </p>
                 </div>
+
               </div>
             </Col>
           </Row>
