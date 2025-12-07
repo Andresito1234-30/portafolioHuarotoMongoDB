@@ -1,97 +1,42 @@
 import axios from "axios";
 
-// URL base de la API - Adaptada al puerto 3977 del backend
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3977/api/v1";
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://portafoliohuarotomongodb.onrender.com/api/v1";
 
-// Crear instancia de axios
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
-// Interceptor para agregar tokens en cada petición
-api.interceptors.request.use(
-  (config) => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
-// Interceptor para manejar errores de respuesta
+// Si token expiró → logout
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-
-    /* COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
-    const originalRequest = error.config;
-    
-    // Si el token expiró (401), intentar refrescar
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (refreshToken) {
-          const response = await axios.post(
-            `${API_URL}/auth/refresh-access-token`,
-            { token: refreshToken }
-          );
-
-          const { accessToken } = response.data;
-          localStorage.setItem("accessToken", accessToken);
-
-          // Reintentar la petición original
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          return api(originalRequest);
-        }
-      } catch (refreshError) {
-        // Si no se puede refrescar el token, limpiar y redirigir al login
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("user");
-        window.location.href = "/login";
-      }
-    }*/
-
-    // Si el token expiró → expulsar al usuario
-    if (error.response?.status === 401) {
-      localStorage.setItem("sessionExpired", "true");
-
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401) {
       localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
       localStorage.removeItem("user");
-      window.location.href = "/login";
+      window.location.href = "#/login";
     }
-
-    return Promise.reject(error);
+    return Promise.reject(err);
   }
 );
 
-// ==================== Auth Endpoints ====================
 export const authAPI = {
-  register: (userData) => api.post("/auth/register", userData),
-  login: (credentials) => api.post("/auth/login", credentials),
-  refreshAccessToken: (refreshToken) =>
-    api.post("/auth/refresh-access-token", { token: refreshToken }),
+  login: (data) => api.post("/auth/login", data),
+  register: (data) => api.post("/auth/register", data),
   logout: () => {
     localStorage.removeItem("accessToken");
-    //localStorage.removeItem("refreshToken");  COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
     localStorage.removeItem("user");
   },
-  getCurrentUser: () => {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user) : null;
-  },
   getAccessToken: () => localStorage.getItem("accessToken"),
-  //getRefreshToken: () => localStorage.getItem("refreshToken"), COMENTADO PARA CERRAR SESIÓN SÍ O SÍ
-  isAuthenticated: () => !!localStorage.getItem("accessToken"),
+  getCurrentUser: () => JSON.parse(localStorage.getItem("user") || "null"),
 };
 
 export default api;
