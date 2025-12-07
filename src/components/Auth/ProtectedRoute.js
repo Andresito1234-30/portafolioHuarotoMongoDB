@@ -10,7 +10,10 @@ function ProtectedRoute({ element }) {
 
   try {
     const decoded = jwtDecode(token);
+
+    // ✔ Token expirado
     if (decoded.exp * 1000 < Date.now()) {
+      localStorage.setItem("sessionExpired", "true");  // 🔥 NECESARIO
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
       return <Navigate to="/login" replace />;
