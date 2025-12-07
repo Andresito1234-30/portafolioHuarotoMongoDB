@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portafolioHuarotoMongoDB/static/css/main.ebc8fbfb.css",
-    "main.js": "/portafolioHuarotoMongoDB/static/js/main.44425008.js",
+    "main.js": "/portafolioHuarotoMongoDB/static/js/main.ad69c9e5.js",
     "static/js/453.ac9b7e2a.chunk.js": "/portafolioHuarotoMongoDB/static/js/453.ac9b7e2a.chunk.js",
     "static/media/tailwind.png": "/portafolioHuarotoMongoDB/static/media/tailwind.e7d4b3510a9e7c7d7ea2.png",
     "static/media/javPort.png": "/portafolioHuarotoMongoDB/static/media/javPort.dae8af9e6c91aa11417d.png",
@@ -32,11 +32,11 @@
     "static/media/Tailwind.svg": "/portafolioHuarotoMongoDB/static/media/Tailwind.24603c32961e3bfa937c29527c7931cb.svg",
     "static/media/windows.svg": "/portafolioHuarotoMongoDB/static/media/windows.e40a93639f7fe1e3bda382d16bfef3ce.svg",
     "main.ebc8fbfb.css.map": "/portafolioHuarotoMongoDB/static/css/main.ebc8fbfb.css.map",
-    "main.44425008.js.map": "/portafolioHuarotoMongoDB/static/js/main.44425008.js.map",
+    "main.ad69c9e5.js.map": "/portafolioHuarotoMongoDB/static/js/main.ad69c9e5.js.map",
     "453.ac9b7e2a.chunk.js.map": "/portafolioHuarotoMongoDB/static/js/453.ac9b7e2a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ebc8fbfb.css",
-    "static/js/main.44425008.js"
+    "static/js/main.ad69c9e5.js"
   ]
 }
